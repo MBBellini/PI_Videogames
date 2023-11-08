@@ -1,0 +1,29 @@
+.card-cont{
+    background-color: purple;
+    border: solid 2px black;
+    border-radius: 5px;
+    width: 15rem;
+    margin: 10px;
+    padding: 5px;
+}
+
+.card-cont-title h2{
+    color: plum;
+}
+
+.home-cont{
+    display: flex;
+    justify-content: center;
+}
+
+.card-cont-info span{
+    color: palevioletred;
+}
+
+.card-cont-img img{
+    border: 3px solid black;
+    height: 200px;
+    width: 13rem;
+    margin: 10px;
+    padding: 5px;
+}

@@ -1,0 +1,31 @@
+.form-cont{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqPLdjNjRm3T3_RBlfQu5SKdl4FYmpkvhoUAec9EXdEdQFTDSW8Jy1W_fWr0CCoJEUMcE&usqp=CAU");
+    background-position: left;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    border: #2E282A;
+    color: red;
+    width: auto;
+    border-radius: 30px;
+    margin-left: 60px;
+    margin-top: 20px;
+    height: 600px;
+    padding: 20px 0px 145px 100px;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.form-cont form{
+    display: flex;
+    flex-direction: column;
+    width: 12rem;
+}
+.form-cont label{
+    color: darkmagenta;
+}

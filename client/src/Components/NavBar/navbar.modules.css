@@ -1,0 +1,29 @@
+.navbar-cont{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: plum;
+    border: solid 2px grey;
+    box-shadow: 10px 5px 5px plum;
+}
+
+.navbar-cont-img img{
+    width: 10rem;
+    padding: 3px;
+
+}
+
+.navbar-cont-links{
+    display: flex;
+    justify-content: space-between;
+    width: 15rem;
+
+}
+
+.navbar-cont-search{
+
+}
+
+.navbar-link{
+    color: white;
+}

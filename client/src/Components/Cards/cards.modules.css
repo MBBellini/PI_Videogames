@@ -1,0 +1,10 @@
+.cards-cont{
+    display: flex;
+    width: 85%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 100%;
+    flex-wrap: wrap;
+}

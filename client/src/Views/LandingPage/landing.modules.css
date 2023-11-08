@@ -1,0 +1,27 @@
+.landingPage-cont{
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZxJASAlyDabq_HlUxHd1OiGQj6VXey4eim1RrQtET8THWcz_gh2PvRguqObm-LBflnhE&usqp=CAU);
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin-top: 20px;
+    height: 900px;
+    border: solid 2px black;
+    box-shadow: 0px 0px 0px 8px #e385e6;
+}
+
+.landingPage-home-button{
+    background-color: grey;
+    border: solid 2px black;
+    padding: 3px;
+    border-radius: 4%;
+    font-family: sans-serif;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+
+  
+      
+}
