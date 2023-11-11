@@ -3,9 +3,10 @@ import Card from '../Card/Card'
 import "./cards.modules.css"
 
 const Cards = ({info}) => {
+  console.log(info);
   return (
     <div className='cards-cont'>{
-        info.map(v=><Card
+        info?.map(v=><Card
         id= {v.id}
         image= {v.image}
         name= {v.name}

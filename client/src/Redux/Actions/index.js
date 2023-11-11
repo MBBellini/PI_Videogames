@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, GET_GAME, GET_GAME_DETAIL, GET_GENRES, PAGINATE, RESET, SEARCH_GAME } from "./action-types"
+import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, GET_GAME, GET_GAME_DETAIL, GET_GENRES, GET_PLATFORMS, PAGINATE, RESET, SEARCH_GAME } from "./action-types"
 
 
 export function postGame(state){
@@ -8,7 +8,7 @@ export function postGame(state){
             await axios.post("http://localhost:3001/videogames/", state)
             alert("Juego creado con exito") 
         } catch (error) {
-            alert(error.response.data.error)
+            console.log(error);
         }
     }
 }
@@ -47,6 +47,20 @@ export function filteredGenres(order){
             dispatch({
                 type: FILTER_BY_GENRES,
                 payload: order
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function getPlatforms(){
+    return async function(dispatch){
+        try {
+            const response= await axios.get("http://localhost:3001/platforms/")
+            dispatch({
+                type: GET_PLATFORMS,
+                payload: response.data
             })
         } catch (error) {
             console.log(error);

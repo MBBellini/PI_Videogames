@@ -9,7 +9,6 @@ const Details = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const gameDetail = useSelector((state)=> state.gameDetail)
-  console.log(gameDetail);
 
   useEffect(()=>{
     dispatch(getGame(params.id))
@@ -22,22 +21,22 @@ const Details = () => {
     <div className='details-cont'>
       <div>
         <label>ID: </label>
-        <p>{gameDetail[0]?.id}</p>
+        <p>{gameDetail?.id}</p>
       </div>
-      <div><img src={gameDetail[0]?.image} alt='imagen'/></div>
+      <div><img src={gameDetail.image} alt='image'/></div>
       <div>
         <label>Nombre: </label>
-        <h1>{gameDetail[0]?.name}</h1>
+        <h1>{gameDetail?.name}</h1>
         <label>Genero: </label>
-        <p>{gameDetail[0]?.genre}</p>
+        <p>{gameDetail?.genre}</p>
         <label>Plataformas: </label>
-        <p>{gameDetail[0]?.platform}</p>
+        <p>{gameDetail?.platform}</p>
         <label>Fecha de lanzamiento: </label>
-        <p>{gameDetail[0]?.release}</p>
+        <p>{gameDetail.release}</p>
         <label>Rating: </label>
-        <p>{gameDetail[0]?.rating}</p>
+        <p>{gameDetail.rating}</p>
         <label>Descripcion: </label>
-        <strong>{gameDetail[0]?.description}</strong>
+        <strong>{gameDetail.description}</strong>
       </div>
     </div>
   )

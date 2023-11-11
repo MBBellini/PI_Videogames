@@ -1,10 +1,11 @@
-import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, GET_GAME, GET_GAME_DETAIL, GET_GENRES, PAGINATE, RESET, SEARCH_GAME } from "../Actions/action-types";
+import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, GET_GAME, GET_GAME_DETAIL, GET_GENRES, GET_PLATFORMS, PAGINATE, RESET, SEARCH_GAME } from "../Actions/action-types";
 
 
 let initialState = {
     allGames:[],
     allGenres:[],
    allGamesBackUp:[],
+   allPlatforms: [],
     gameDetail:{},
     gamesFiltered:[],
     filters:false,
@@ -29,7 +30,8 @@ function rootReducer(state= initialState, action){
                 ...state,
                 allGames: [...action.payload].splice(0, ITEMS_PER_PAGE),
                 gamesFiltered: action.payload,
-                filters: true
+                filters: true,
+                currentPage: 0
             }
 
         case GET_GENRES:
@@ -42,21 +44,30 @@ function rootReducer(state= initialState, action){
             return{
                 ...state,
                 allGames: [...state.allGamesBackUp].filter(videogame=> videogame.genre.includes(action.payload)).splice(0, ITEMS_PER_PAGE),
-                gamesFiltered: [...state.allGamesBackUp].filter(videogame=> videogame.genre.includes(action.payload))
+                gamesFiltered: [...state.allGamesBackUp].filter(videogame=> videogame.genre.includes(action.payload)),
+                currentPage: 0
             }
+
+        case GET_PLATFORMS:
+            return{
+                ...state,
+                allPlatforms: action.payload
+            }  
             
             case FILTER_BY_ORIGIN:
                 if(action.payload === "DB"){
                 return{
                     ...state,
                     allGames: [...state.allGamesBackUp].filter(videogame=> videogame.hasOwnProperty("created")).splice(0, ITEMS_PER_PAGE),
-                    gamesFiltered: [...state.allGamesBackUp].filter(videogame=> isNaN(parseInt(videogame.id)))
+                    gamesFiltered: [...state.allGamesBackUp].filter(videogame=> isNaN(parseInt(videogame.id))),
+                    currentPage: 0
                 }
             }else{
                 return{
                     ...state,
                 allGames: [...state.allGamesBackUp].filter(videogame=> !videogame.hasOwnProperty("created")).splice(0, ITEMS_PER_PAGE),
-                gamesFiltered: [...state.allGamesBackUp].filter(videogame=> !isNaN(parseInt(videogame.id)))
+                gamesFiltered: [...state.allGamesBackUp].filter(videogame=> !isNaN(parseInt(videogame.id))),
+                currentPage: 0
                 }
             }
 
@@ -82,7 +93,7 @@ function rootReducer(state= initialState, action){
                 }
             }
 
-            if(action.payload === "next" && firstIndex >= state.allGamesBackUp.length) return state  //!Para que no siga avanzando
+            if(action.payload === "next" && firstIndex >= state.allGamesBackUp.length) return state
             if(action.payload === "prev" && prev_page < 0) return state                
 
 
@@ -148,7 +159,7 @@ function rootReducer(state= initialState, action){
                             currentPage: 0
                        }
                     }
-            default: return state
+            //default: return state
 
             }
     
@@ -164,8 +175,8 @@ function rootReducer(state= initialState, action){
             return{
                 ...state,
                 allGames: [...state.allGamesBackUp].splice(0, ITEMS_PER_PAGE),
-                currentPage: 0,
-                gamesFiltered: []
+                gamesFiltered: [],
+                currentPage: 0
             }    
             
         default: return state

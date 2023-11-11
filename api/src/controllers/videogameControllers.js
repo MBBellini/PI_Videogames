@@ -1,5 +1,5 @@
 const axios = require ('axios')
-const {Videogame, Genre } = require('../db');
+const {Videogame, Genre, Platform } = require('../db');
 
 const { API_KEY } = process.env;
 
@@ -7,6 +7,13 @@ const getVideogameDb = async ()=>{
     const videogameDb = await Videogame.findAll({
         include: [{ 
                 model: Genre,
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                    },
+                },
+                {
+                model: Platform,
                 attributes: ["name"],
                 through: {
                     attributes: [],
@@ -21,7 +28,7 @@ const getVideogameDb = async ()=>{
             id,
             name,
             description,
-            platform,
+            platform: videogame.platforms?.map((p) => p.name).join(', '),
             image,
             release,
             rating,
@@ -59,47 +66,6 @@ const getVideogameApi = async () => {
     return allVideogames.slice(0, pageSize);
 }
 
-const getVideogamesId = async (id, source)=>{
-    if(source === "dataB"){
-        const db = await Videogame.findByPk({
-            where: { id: id},
-            include:{
-                model: Genre,
-                attributes: ["name"],
-                through: {
-                    genre: [],
-                }
-            }
-        })
-        const videogameDb= [{
-            id: db.id,
-            name: db.name,
-            description: db.description,
-            platform: db.platform,
-            image: db.image,
-            release: db.release,
-            rating: db.rating,
-            genre: db.genre.map((g)=> g.genre.name),
-        }]
-        return videogameDb
-    } else{
-        const api= await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
-        const info = await api.data;
-
-        const videogameId =[{
-            id: info.id,
-            name: info.name,
-            description: info.description,
-            platform: info.platforms?.map((p)=> p.platform.name).join(', '),
-            image: info.background_image,
-            release: info.released,
-            rating: info.rating,
-            genre: info.genres?.map(g => g.name).join(', '), 
-        }]
-        return videogameId
-    }
-};
-
 const getAllVg = async (name) => {
     const vgDb = await getVideogameDb();
     const vgAPi = await getVideogameApi();
@@ -114,11 +80,33 @@ if(name){
 return allVideogames;
 }
 
+const getVideogamesId = async (id)=>{
+    if(isNaN(id)){
+        const vgDb = await Videogame.findByPk(id)     
+        return vgDb
+    } else{
+        const api= await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
+        const info = await api.data;
+
+        const videogameId ={
+            id: info.id,
+            name: info.name,
+            description: info.description,
+            platform: info.platforms?.map((p)=> p.platform.name).join(', '),
+            image: info.background_image,
+            release: info.released,
+            rating: info.rating,
+            genre: info.genres?.map(g => g.name).join(', '), 
+        }
+        return videogameId
+    }
+};
+
 const createVideogame = async (name, description, platform, image, release, rating, genre) => {
 
     if(!image) image ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZp6jhcXdb71KHbdAaxTtlGLF0RqEfdY3JoQ&usqp=CAU"
 
-    const videogame = await Videogame.create({
+    const videogame = await Videogame.create({        
         name,
         description,
         platform,
@@ -127,12 +115,24 @@ const createVideogame = async (name, description, platform, image, release, rati
         rating,
         genre
     });
+
+    console.log(videogame);
     const searchGenre = await Genre.findAll({
         where: {
             name: genre
         }
     })
+    console.log(searchGenre);
     await videogame.addGenre(searchGenre);
+
+    const searchPlatform = await Platform.findAll({
+        where: {
+            name: platform
+        }
+    })
+    console.log(searchPlatform);
+    await videogame.addPlatform(searchPlatform);
+
     return videogame
 }
 module.exports = {

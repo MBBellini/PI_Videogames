@@ -30,7 +30,6 @@ const Home = () => {
   }
 
   const reset = ()=> {
-    //dispatch(getGames())
     dispatch(gameReset())
   }
 
