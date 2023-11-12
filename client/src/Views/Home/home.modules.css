@@ -3,5 +3,19 @@
     justify-content: center;
     align-items: center;
     height: 90vh;
-    margin-top: 2rem;
+    margin-top: 6rem;
+}
+
+.button-cont{
+    border: solid 0.2px transparent;
+    border-radius: 9999px;
+    font-size: 1rem;
+    transition: background-color 0.5s;
+    cursor: pointer;
+    color: black;
+    background-color: rgba(220, 220, 220, 0.508);
+    padding: 3px;
+    margin-left: 5vh;
+    margin-top: 20px;
+    padding: 5px;
 }

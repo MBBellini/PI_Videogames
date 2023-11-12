@@ -2,7 +2,7 @@ import React from 'react'
 import "./card.modules.css"
 import { Link } from 'react-router-dom'
 
-const Card = ({image, name, genre, id }) => {
+const Card = ({image, name, genre, id, rating, platform }) => {
   return (
     <div className='card-cont'>
     <div className='card-cont-title'>
@@ -17,6 +17,12 @@ const Card = ({image, name, genre, id }) => {
       <br/>
       <label>genero: </label>
       <span>{genre}</span>
+      <br/>
+      <label>rating: </label>
+      <span>{rating}</span>
+      <br/>
+      <label>platform: </label>
+      <span>{platform}</span>
       <br/>
     </div>
 

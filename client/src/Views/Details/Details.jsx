@@ -26,7 +26,7 @@ const Details = () => {
       <div><img src={gameDetail.image} alt='image'/></div>
       <div>
         <label>Nombre: </label>
-        <h1>{gameDetail?.name}</h1>
+        <h1>{gameDetail?.name}</h1>     
         <label>Genero: </label>
         <p>{gameDetail?.genre}</p>
         <label>Plataformas: </label>

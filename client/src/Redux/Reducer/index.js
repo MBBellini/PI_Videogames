@@ -1,4 +1,4 @@
-import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, GET_GAME, GET_GAME_DETAIL, GET_GENRES, GET_PLATFORMS, PAGINATE, RESET, SEARCH_GAME } from "../Actions/action-types";
+import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, FILTER_BY_PLATFORM, FILTER_BY_RATING, GET_GAME, GET_GAME_DETAIL, GET_GENRES, GET_PLATFORMS, PAGINATE, RESET, SEARCH_GAME } from "../Actions/action-types";
 
 
 let initialState = {
@@ -48,12 +48,21 @@ function rootReducer(state= initialState, action){
                 currentPage: 0
             }
 
+
         case GET_PLATFORMS:
             return{
                 ...state,
                 allPlatforms: action.payload
             }  
-            
+
+        case FILTER_BY_PLATFORM:
+            return{
+                ...state,
+                allGames: [...state.allGamesBackUp].filter(videogame=> videogame.platform.includes(action.payload)).splice(0, ITEMS_PER_PAGE),
+                gamesFiltered: [...state.allGamesBackUp].filter(videogame=> videogame.platform.includes(action.payload)),
+                currentPage: 0
+            }    
+                    
             case FILTER_BY_ORIGIN:
                 if(action.payload === "DB"){
                 return{
@@ -159,10 +168,71 @@ function rootReducer(state= initialState, action){
                             currentPage: 0
                        }
                     }
-            //default: return state
+            default: return state
 
             }
+        
+            case FILTER_BY_RATING:
+                switch(action.payload){
+                    case "Min":
+                        let min = []
+                        if(state.filters){
+                            min = [...state.gamesFiltered].sort((prev, next)=>{
+                                if(prev.rating > next.rating) return 1
+                                if(prev.rating < next.rating) return -1
+                                return 0
+                            })
+                            return{
+                                ...state,
+                                allGames: [...min].splice(0, ITEMS_PER_PAGE),
+                                gamesFiltered: min,
+                                currentPage: 0
+                            }
+                        }else{
+                            min = [...state.allGamesBackUp].sort((prev, next)=>{
+                                if(prev.rating >next.rating) return 1
+                                if(prev.rating <next.rating) return -1
+                                return 0
+                            })
+                            return{
+                                ...state,
+                                allGames: [...min].splice(0, ITEMS_PER_PAGE),
+                                allGamesBackUp: min,
+                                currentPage: 0
+                            }
+                        }
+                    case "Max":
+                        let max = []
+                        if(state.filters){
+                            max = [...state.gamesFiltered].sort((prev, next)=>{
+                                if(prev.rating >next.rating) return -1
+                                if(prev.rating <next.rating) return 1
+                                return 0
+                            })
+                            return{
+                                ...state,
+                                allGames: [...max].splice(0, ITEMS_PER_PAGE),
+                                gamesFiltered: max,
+                                currentPage: 0
+                            }
+                        }else{
+                            max = [...state.allGamesBackUp].sort((prev, next)=>{
+                                if(prev.rating >next.rating) return -1
+                                if(prev.rating <next.rating) return 1
+                                return 0
+                            })
+                            return{
+                                ...state,
+                                allGames: [...max].splice(0, ITEMS_PER_PAGE),
+                                allGamesBackUp: max,
+                                currentPage: 0
+                           }
+                        }
+                default: return state
     
+                }
+                            
+        
 
         case CLEAN_GAME_DETAIL:
                 return{

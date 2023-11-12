@@ -7,10 +7,13 @@ const Cards = ({info}) => {
   return (
     <div className='cards-cont'>{
         info?.map(v=><Card
+        key={v.id}
         id= {v.id}
         image= {v.image}
         name= {v.name}
         genre= {v.genre}
+        rating={v.rating}
+        platform={v.platform}
         />)
     }
     </div>

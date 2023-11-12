@@ -153,6 +153,10 @@ const Form = () => {
         <span>{errors.rating}</span>
         <div>
         <label>Generos: </label>
+        {/* <select  onChange={handleChange} name="genre" id='genre'>{
+          allGenres?.map((g)=><option name={g.name} key={g.id} value={g.name}>{g.name}</option>)
+        }
+        </select> */}
         <select  onChange={handleChange}name='genre' id=''>{
           allGenres?.map((g)=><option key={g} value={g.name}>{g.name}</option>)
         }
@@ -165,6 +169,10 @@ const Form = () => {
         </div>
         <div>
       <label>Plataformas: </label> 
+      {/* <select  onChange={handleChange} name="platform" id='platform'>{
+          allPlatforms?.map((p)=><option key={p.id} name={p.name} value={p.name}>{p.name}</option>)
+        }
+        </select>   */}
        <select  onChange={handleChange}name='platform' id=''>{
           allPlatforms?.map((p)=><option key={p} value={p.name}>{p.name}</option>)
         }

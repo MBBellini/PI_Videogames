@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, GET_GAME, GET_GAME_DETAIL, GET_GENRES, GET_PLATFORMS, PAGINATE, RESET, SEARCH_GAME } from "./action-types"
+import { CLEAN_GAME_DETAIL, FILTER, FILTER_BY_GENRES, FILTER_BY_ORIGIN, FILTER_BY_PLATFORM, FILTER_BY_RATING, GET_GAME, GET_GAME_DETAIL, GET_GENRES, GET_PLATFORMS, PAGINATE, RESET, SEARCH_GAME } from "./action-types"
 
 
 export function postGame(state){
@@ -46,6 +46,19 @@ export function filteredGenres(order){
         try {
             dispatch({
                 type: FILTER_BY_GENRES,
+                payload: order
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function filteredPlatform(order){
+    return async function(dispatch){
+        try {
+            dispatch({
+                type: FILTER_BY_PLATFORM,
                 payload: order
             })
         } catch (error) {
@@ -103,10 +116,20 @@ export function page(order){
         })
     }
 }
+
 export function gamesFiltered(order){
     return function(dispatch){
         dispatch({
             type: FILTER,
+            payload: order
+        })
+    }
+}
+
+export function ratingFiltered(order){
+    return function(dispatch){
+        dispatch({
+            type: FILTER_BY_RATING,
             payload: order
         })
     }

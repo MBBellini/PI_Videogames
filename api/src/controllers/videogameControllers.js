@@ -82,8 +82,33 @@ return allVideogames;
 
 const getVideogamesId = async (id)=>{
     if(isNaN(id)){
-        const vgDb = await Videogame.findByPk(id)     
-        return vgDb
+        const vgDb = await Videogame.findByPk(id, {
+            include: [{ 
+                model: Genre,
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                    },
+                },
+                {
+                model: Platform,
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                    },
+                },
+        ]
+        })     
+        return {
+            id: vgDb.id,
+            name: vgDb.name,
+            description: vgDb.description,
+            platform: vgDb.platforms?.map((p)=> p.name).join(', '),
+            image: vgDb.image,
+            release: vgDb.released,
+            rating: vgDb.rating,
+            genre: vgDb.genres?.map(g => g.name).join(', '),
+        }
     } else{
         const api= await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
         const info = await api.data;

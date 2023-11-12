@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import Cards from '../../Components/Cards/Cards'
 import { useDispatch, useSelector } from 'react-redux'
-import { filterOrigin, filteredGenres, gameReset, gamesFiltered, getGames, getGenres, page } from '../../Redux/Actions'
+import { filterOrigin, filteredGenres, filteredPlatform, gameReset, gamesFiltered, getGames, getGenres, getPlatforms, page, ratingFiltered } from '../../Redux/Actions'
 import "./home.modules.css"
 
 
@@ -10,23 +10,33 @@ const Home = () => {
   
   const allGames = useSelector(state=> state.allGames)
   const allGenres = useSelector(state=> state.allGenres)
+  const allPlatforms = useSelector(state=> state.allPlatforms)
   const currentPage = useSelector(state=> state.currentPage)
 
   useEffect(()=>{
     dispatch(getGames())
     dispatch(getGenres())
+    dispatch(getPlatforms())
   },[])
 
-  const filters= (e) =>{
-    dispatch(gamesFiltered(e.target.name))
+  const filters= (event) =>{
+    dispatch(gamesFiltered(event.target.name))
+  }
+
+  const filterByRating= (event) =>{
+    dispatch(ratingFiltered(event.target.name))
   }
 
   const filterByGenre= (event) =>{
     dispatch(filteredGenres(event.target.value))
   }
 
-  const pagination = (e) =>{
-    dispatch(page(e.target.name))
+  const filterByPlatform= (event) =>{
+    dispatch(filteredPlatform(event.target.value))
+  }
+
+  const pagination = (event) =>{
+    dispatch(page(event.target.name))
   }
 
   const reset = ()=> {
@@ -40,23 +50,38 @@ const Home = () => {
   return (
     <div className='home-cont'>
       <div>
-        <button onClick={reset}> Reset</button>
         <div>
+          <button className='button-cont' onClick={reset}> Reset</button>
+        </div>
           <label>Filtros/Ordenamiento</label>
           <div>
-            <button  onClick={filterByOrigin} name={"DB"}> Data Base</button><button  onClick={filterByOrigin}name={"API"}>API</button>
+            <button onClick={filterByOrigin} name={"DB"}> Data Base</button><button  onClick={filterByOrigin}name={"API"}>API</button>
           </div>
           <div>
-          <select name='filterByGenre' onChange={filterByGenre}>   //!cuando filtro por genero por default que vuelva al genero en el value
+          <select name='filterByGenre' onChange={filterByGenre}>   
             <option>filtro por genero </option>   
           {
           allGenres?.map((g)=><option key={g.name} value={g.name}>{g.name}</option>)
           }
           </select>
           </div>
-          <button name='AZ' onClick={filters}>A-Z</button>
-          <button name='ZA' onClick={filters}>Z-A</button>
-        </div>
+          <div>
+            <select name='filterByPlatform' onChange={filterByPlatform}>
+              <option>filtro por plataforma </option>{
+                allPlatforms?.map((p)=><option key={p.name} value={p.name}>{p.name}</option>)
+              }
+            </select>
+          </div>
+          <div>
+            <label>Alfabeticamente</label>
+            <button name='AZ' onClick={filters}>A-Z</button>
+            <button name='ZA' onClick={filters}>Z-A</button>
+          </div>          
+          <div>
+          <label>Rating</label>
+          <button name='Min' onClick={filterByRating}>Min</button>
+          <button name='Max' onClick={filterByRating}>Max</button>
+          </div>
         <div>
           <h3>currentPage: {currentPage +1}</h3> 
         </div>
