@@ -27,12 +27,12 @@ const Form = () => {
   });
 
   const[errors, setErrors] = useState({
-    name: "",
-    description: "",
+    name: "Data is required",
+    description: "Data is required",
     platform: [],
     image: "",
-    release: "",
-    rating: "",
+    release: "Data is required",
+    rating: "Data is required",
     genre: []
   });
 
@@ -138,13 +138,14 @@ const Form = () => {
       event.preventDefault();
       dispatch(postGame(state));
     }
-
+console.log(state);
   return (
     <div className='form-cont'>
       <form onSubmit={handleSubmit}>
         <input onChange={handleChange} type='text' name='name' placeholder='name'/>
         <span>{errors.name}</span>
         <input onChange={handleChange} type='text' name='description' placeholder='desciption'/>
+        <span>{errors.description}</span>
         <input onChange={handleChange} type='text' name='image' placeholder='image'/>
         <span>{errors.image}</span>
         <input onChange={handleChange} type='text' name='release' placeholder='release'/>
@@ -153,11 +154,8 @@ const Form = () => {
         <span>{errors.rating}</span>
         <div>
         <label>Generos: </label>
-        {/* <select  onChange={handleChange} name="genre" id='genre'>{
-          allGenres?.map((g)=><option name={g.name} key={g.id} value={g.name}>{g.name}</option>)
-        }
-        </select> */}
-        <select  onChange={handleChange}name='genre' id=''>{
+        <select  onChange={handleChange}name='genre' id=''>
+        <option hidden>select genre</option>{
           allGenres?.map((g)=><option key={g} value={g.name}>{g.name}</option>)
         }
         </select>
@@ -168,12 +166,9 @@ const Form = () => {
         </div>
         </div>
         <div>
-      <label>Plataformas: </label> 
-      {/* <select  onChange={handleChange} name="platform" id='platform'>{
-          allPlatforms?.map((p)=><option key={p.id} name={p.name} value={p.name}>{p.name}</option>)
-        }
-        </select>   */}
-       <select  onChange={handleChange}name='platform' id=''>{
+      <label>Plataformas: </label>
+       <select  onChange={handleChange}name='platform' id=''>
+       <option hidden>select platform</option>{
           allPlatforms?.map((p)=><option key={p} value={p.name}>{p.name}</option>)
         }
         </select>        

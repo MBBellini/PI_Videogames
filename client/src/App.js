@@ -9,7 +9,6 @@ import Details from './Views/Details/Details';
 function App() {
   return (
     <div className="App">
-      <h1>Henry Videogames</h1>
       <BrowserRouter>
       <Route path={"*"} component= {NavBar}/>
       <Switch>

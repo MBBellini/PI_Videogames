@@ -52,7 +52,7 @@ const getVideogameApi = async () => {
         return{
             id: videogame.id,
             name: videogame.name,
-            description: videogame.description,
+            description: videogame.description_raw,
             platform: videogame.platforms?.map((p)=> p.platform.name).join(', '),
             image: videogame.background_image,
             release: videogame.released,
@@ -105,7 +105,7 @@ const getVideogamesId = async (id)=>{
             description: vgDb.description,
             platform: vgDb.platforms?.map((p)=> p.name).join(', '),
             image: vgDb.image,
-            release: vgDb.released,
+            release: vgDb.release,
             rating: vgDb.rating,
             genre: vgDb.genres?.map(g => g.name).join(', '),
         }
@@ -116,7 +116,7 @@ const getVideogamesId = async (id)=>{
         const videogameId ={
             id: info.id,
             name: info.name,
-            description: info.description,
+            description: info.description_raw,
             platform: info.platforms?.map((p)=> p.platform.name).join(', '),
             image: info.background_image,
             release: info.released,

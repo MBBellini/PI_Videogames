@@ -53,25 +53,24 @@ const Home = () => {
         <div>
           <button className='button-cont' onClick={reset}> Reset</button>
         </div>
-          <label>Filtros/Ordenamiento</label>
+          <label>Filtros</label>
           <div>
-            <button onClick={filterByOrigin} name={"DB"}> Data Base</button><button  onClick={filterByOrigin}name={"API"}>API</button>
+            <button onClick={filterByOrigin} name={"DB"}> Data Base</button><button onClick={filterByOrigin}name={"API"}>API</button>
           </div>
           <div>
           <select name='filterByGenre' onChange={filterByGenre}>   
-            <option>filtro por genero </option>   
+            <option hidden>filtro por genero </option>   
           {
           allGenres?.map((g)=><option key={g.name} value={g.name}>{g.name}</option>)
           }
           </select>
+          <select name='filterByPlatform' onChange={filterByPlatform}>
+            <option hidden>filtro por plataforma </option>{
+              allPlatforms?.map((p)=><option key={p.name} value={p.name}>{p.name}</option>)
+            }
+          </select>
           </div>
-          <div>
-            <select name='filterByPlatform' onChange={filterByPlatform}>
-              <option>filtro por plataforma </option>{
-                allPlatforms?.map((p)=><option key={p.name} value={p.name}>{p.name}</option>)
-              }
-            </select>
-          </div>
+          <label>Ordenamientos</label>
           <div>
             <label>Alfabeticamente</label>
             <button name='AZ' onClick={filters}>A-Z</button>

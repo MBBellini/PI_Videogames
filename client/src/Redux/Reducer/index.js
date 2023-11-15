@@ -45,6 +45,7 @@ function rootReducer(state= initialState, action){
                 ...state,
                 allGames: [...state.allGamesBackUp].filter(videogame=> videogame.genre.includes(action.payload)).splice(0, ITEMS_PER_PAGE),
                 gamesFiltered: [...state.allGamesBackUp].filter(videogame=> videogame.genre.includes(action.payload)),
+                filters: true,
                 currentPage: 0
             }
 
@@ -60,6 +61,7 @@ function rootReducer(state= initialState, action){
                 ...state,
                 allGames: [...state.allGamesBackUp].filter(videogame=> videogame.platform.includes(action.payload)).splice(0, ITEMS_PER_PAGE),
                 gamesFiltered: [...state.allGamesBackUp].filter(videogame=> videogame.platform.includes(action.payload)),
+                filters: true,
                 currentPage: 0
             }    
                     
@@ -69,6 +71,7 @@ function rootReducer(state= initialState, action){
                     ...state,
                     allGames: [...state.allGamesBackUp].filter(videogame=> videogame.hasOwnProperty("created")).splice(0, ITEMS_PER_PAGE),
                     gamesFiltered: [...state.allGamesBackUp].filter(videogame=> isNaN(parseInt(videogame.id))),
+                    filters: true,
                     currentPage: 0
                 }
             }else{
@@ -76,6 +79,7 @@ function rootReducer(state= initialState, action){
                     ...state,
                 allGames: [...state.allGamesBackUp].filter(videogame=> !videogame.hasOwnProperty("created")).splice(0, ITEMS_PER_PAGE),
                 gamesFiltered: [...state.allGamesBackUp].filter(videogame=> !isNaN(parseInt(videogame.id))),
+                filters: true,
                 currentPage: 0
                 }
             }
@@ -246,6 +250,7 @@ function rootReducer(state= initialState, action){
                 ...state,
                 allGames: [...state.allGamesBackUp].splice(0, ITEMS_PER_PAGE),
                 gamesFiltered: [],
+                filters: false,
                 currentPage: 0
             }    
             
